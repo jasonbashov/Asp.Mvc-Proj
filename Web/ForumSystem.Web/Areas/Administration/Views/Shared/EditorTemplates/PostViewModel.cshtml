@@ -1,0 +1,7 @@
+﻿@model ForumSystem.Web.Areas.Administration.Models.Admin.PostViewModel
+
+@Html.LabelFor(m => m.Title)
+@Html.EditorFor(m => m.Title)
+
+@Html.LabelFor(m => m.Content)
+@Html.TextAreaFor(m => m.Content, new { @class = "form-control" })

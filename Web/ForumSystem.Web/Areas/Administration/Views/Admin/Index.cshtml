@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Administration";
+}
+
+<h2>@ViewBag.Title</h2>
+@(Html.Kendo()
+    .Grid<ForumSystem.Web.Areas.Administration.Models.Admin.PostViewModel>()
+    .Name("grid")
+    .Columns(columns =>
+        {
+            columns.Bound(p => p.Id);
+            columns.Bound(p => p.AuthorName);
+            columns.Bound(p => p.Title);
+            columns.Bound(p => p.Content);
+            columns.Bound(p => p.CreatedOn);
+            columns.Bound(p => p.ModifiedOn);
+            columns.Bound(p => p.IsDeleted);
+            columns.Command(com => com.Edit()).Title("Edition");
+            columns.Command(com => com.Destroy()).Title("Deletion");
+        })
+    .Editable(edit => edit.Mode(GridEditMode.PopUp))
+    .ToolBar(toolbar =>
+        {
+            toolbar.Create();
+        })
+    .Filterable()
+    .Sortable()
+    .Pageable(pageable => pageable
+        .Refresh(true)
+        .PageSizes(true)
+        .ButtonCount(5))
+    .DataSource(data =>
+        data
+        .Ajax()
+        .Model(m => m.Id(p => p.Id))
+        .Read(read => read.Action("Read", "Admin"))
+        .Create(create => create.Action("Create", "Admin"))
+        .Update(update => update.Action("Update", "Admin"))
+        .Destroy(destroy => destroy.Action("Destroy", "Admin")))
+        
+)
